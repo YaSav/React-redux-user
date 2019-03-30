@@ -1,0 +1,66 @@
+#photoG {
+    height: 500px;
+    position: relative;
+}
+
+#photoG .image {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-x: center;
+    background-position-y: center;
+    height: 90%;
+}
+
+.view-count-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    margin: 5px;
+    top: 20px;
+    right: 20px;
+}
+
+.view-count {
+    text-align: center;
+    background-color: #f3f7f4b8; /*#ff00aa*/
+    border: solid 1px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    /*use some other props to align content*/
+}
+
+.comment-container{
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+    left: 50%;
+    /*remove translate y -50%, please!!!!!!*/
+    transform: translate(-50%, -50%);    
+    text-decoration: overline;
+    text-align: center;
+}
+
+.controls-container {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex;
+}
+
+.img-button {
+    border: 1px solid;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: #f3f7f4b8;
+    margin: 0 1px;
+    transition: all 0.5s;
+}
+
+.img-button:hover {
+    transform: scale(2);
+    border-width: 2px;
+}
