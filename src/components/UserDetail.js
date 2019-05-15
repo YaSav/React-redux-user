@@ -4,13 +4,8 @@ import getUserById from "../selectors"
 import { connect } from 'react-redux'
 
 class UserDetail extends React.Component {
-    constructor() {
-        super();
-        this.state = {}
-        
-    }
-
     static propTypes = {
+        //18*
         user: PropTypes.object
     };
 

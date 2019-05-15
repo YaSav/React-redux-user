@@ -34,7 +34,6 @@ function get(url) {
 
     return get(`https://api.github.com/users/${userLogin}`)
         .then(function(response) {
-            console.log('then in get');
             return response;
         })
 }

@@ -7,6 +7,7 @@ class PhotoG extends React.Component {
     constructor() {
         super();
         this.delay = 3000;
+        //move to mock? yes
         this.images = [
             { url: img1, color: '#b37968', comment: 'Снігурчик, давно їх не бачила' },
             { url: img2, color: '#2b2c2f', comment: 'Моя голова, як брекети ставила робила' },
@@ -58,35 +59,33 @@ class PhotoG extends React.Component {
     }
 
     render() {
-        let activeImage = this.state.activeImage;
+        const { activeImage } = this.state;
+
         return (
-            <React.Fragment>
-                <div id="photoG" style={{ color: activeImage.color }} >
-                    <div className="image" style={{ backgroundImage: "url(" + activeImage.url + ")" }}></div>
-                    <div className="view-count-container">
-                        <div className="view-count">
-                            {activeImage.viewCount}
-                        </div>
-                    </div>
-                    <div className="comment-container">
-                        <div className="comment">
-                            {activeImage.comment}
-                        </div>
-                    </div>
-                    <div className="controls-container">
-                        {
-                            this.images.map((image, index) => (
-                                <div
-                                    className="img-button"
-                                    key={index}
-                                    onClick={() => this.setImage(index)}>
-                                </div>
-                            ))
-                        }                        
+            <div id="photoG" style={{ color: activeImage.color }} >
+                <div className="image" style={{ backgroundImage: "url(" + activeImage.url + ")" }}></div>
+                <div className="view-count-container">
+                    <div className="view-count">
+                        {activeImage.viewCount}
                     </div>
                 </div>
-
-            </React.Fragment >
+                <div className="comment-container">
+                    <div className="comment">
+                        {activeImage.comment}
+                    </div>
+                </div>
+                <div className="controls-container">
+                    {
+                        this.images.map((image, index) => (
+                            <div
+                                className="img-button"
+                                key={index}
+                                onClick={() => this.setImage(index)}>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
         )
     }
 }

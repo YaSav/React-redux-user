@@ -1,10 +1,7 @@
 import React from 'react';
 
-const ValidationMessage = props => (
-    props.show
-        ? <div className="validation-message">{props.error}</div>
-        : null
+const ValidationMessage = ({show, error}) => (
+    (show && error) && <div className="validation-message">{error}</div>
 );
-
 
 export default ValidationMessage

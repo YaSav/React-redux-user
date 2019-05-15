@@ -1,25 +1,20 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+
 import { getGitHubAccount } from '../gitHubService';
-import ValidationMessage from './ValidationMessage'
-import { connect } from 'react-redux'
-import { addUser } from '../actionCreator'
+import ValidationMessage from './ValidationMessage';
+import { addUser } from '../actionCreator';
 import { USERS } from '../constants/paths';
 
 class UserInput extends React.Component {
-
-    regExp = {
-        number: new RegExp(/^(\+38)?[ ]?(\(([0-9]{3})\)|([0-9]{3}))[- ]?([0-9]{3})[- ]?([0-9]{4})$/),
-        email: new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/)
-    }
 
     constructor() {
         super();
         this.state = {
             user: {
                 name: "",
-                //а от з селектом не так має бути - то точно
-                sex: "минулого разу заканало поставити вронг вел'ю - цього разу ні(",
+                sex: "",
                 number: "",
                 email: "",
                 hasGitHub: false,
@@ -28,6 +23,10 @@ class UserInput extends React.Component {
             errors: {},
             isSubmitted: false
         }
+        this.regExp = {
+            number: new RegExp(/^(\+38)?[ ]?(\(([0-9]{3})\)|([0-9]{3}))[- ]?([0-9]{3})[- ]?([0-9]{4})$/),
+            email: new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/)
+        }
     }
 
     static propTypes = {
@@ -35,11 +34,13 @@ class UserInput extends React.Component {
     };
 
     addUser = (form) => {
-        const user = this.state.user;
+        const { user } = this.state;
+        const { addUser, history } = this.props;
+
         user.id = `${user.name}${(new Date()).getTime()}`
-        this.props.addUser(user);
+        addUser(user);
         form.reset();
-        this.props.history.push(USERS)
+        history.push(USERS)
     };
 
     checkRequiredValidation = (name) => {
@@ -105,22 +106,24 @@ class UserInput extends React.Component {
 
     handleChange = event => {
         let user = this.state.user;
+
         user[event.target.name] = event.target.value;
         this.setState({ user });
     }
 
-    handleCBChange = event => {
-        let user = this.state.user;
+    handleGitHubCBChange = event => {
+        const user = this.state.user;
+
         user[event.target.name] = event.target.checked;
-        //то канєшно не так має бути
-        user.gitHubAccount = user.hasGitHub ? user.gitHubAccount : "";
+        if (!event.target.checked) {
+            user.gitHubAccount = "";
+        }
         this.setState({ user });
     }
 
     render() {
         const { errors, user, isSubmitted } = this.state;
         return (
-            <React.Fragment>
                 <form name="userForm" noValidate onSubmit={this.submitForm}>
                     <legend>Заповніть дані</legend>
 
@@ -145,6 +148,7 @@ class UserInput extends React.Component {
                             className="form-control"
                             value={user.sex}
                         >
+                            <option value="" disabled hidden></option>
                             <option value="male">Чоловіча</option>
                             <option value="female">Жіноча</option>
                         </select>
@@ -173,7 +177,7 @@ class UserInput extends React.Component {
                     </div>
 
                     <div className="form-group form-check">
-                        <input type="checkbox" name="hasGitHub" className="form-check-input" value={user.hasGitHub} onChange={this.handleCBChange} />
+                        <input type="checkbox" name="hasGitHub" className="form-check-input" value={user.hasGitHub} onChange={this.handleGitHubCBChange} />
                         <label className="form-check-label">У мене є Github!</label>
                     </div>
                     {
@@ -189,7 +193,6 @@ class UserInput extends React.Component {
                     <button type="submit">Додати користувача</button>
                 </form>
 
-            </React.Fragment>
         )
     }
 }

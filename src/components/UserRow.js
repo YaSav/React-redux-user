@@ -2,11 +2,13 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
+
 import { deleteUser } from '../actionCreator'
-import { USER_DETAIL_PATH } from '../constants/paths'
+import { USER_DETAIL } from '../constants/paths'
 
 class UserRow extends React.Component {
 
+    //12*
     static propTypes = {
         deleteUser: PropTypes.func,
         user: PropTypes.object
@@ -18,7 +20,7 @@ class UserRow extends React.Component {
         return (
             <div className="user-row info-block">
                 <div className="item">                    
-                    <Link to={ USER_DETAIL_PATH(user.id) }>
+                    <Link to={ USER_DETAIL(user.id) }>
                         {user.name}
                     </Link>
                 </div>
@@ -27,16 +29,14 @@ class UserRow extends React.Component {
                 </div>
                 <div className="item right-side">
                     {
-                        user.gitHubAccount 
-                            ? (
-                                <div>
-                                    <a href={`https://github.com/${user.gitHubAccount}`}>
-                                        {user.gitHubAccount}
-                                    </a>
-                                    <img src={user.icon} alt="Account" />
-                                </div>
-                            ) 
-                            : null
+                        user.gitHubAccount && (
+                            <div>
+                                <a href={`https://github.com/${user.gitHubAccount}`}>
+                                    {user.gitHubAccount}
+                                </a>
+                                <img src={user.icon} alt="Account" />
+                            </div>
+                        )
                     }
                 </div>
                 <div className="item item-with-icon">
